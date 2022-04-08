@@ -12,10 +12,13 @@ app.use(express.json())
 
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
+app.post("/checkreceipt",(req,res)=>{
+    res.send('in check receipt--->')
+
+})
 
 //Routes
 app.get('/', (req, res) => {
-  res.send('Welcome To ICinema Backend !')
 })
 
 
