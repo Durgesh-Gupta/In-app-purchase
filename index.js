@@ -13,7 +13,8 @@ app.use(express.json())
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
 app.post("/checkreceipt",(req,res)=>{
-    res.send('in check receipt--->')
+    console.log(req.data)
+    res.send('in check receipt--->',req.data)
 
 })
 
