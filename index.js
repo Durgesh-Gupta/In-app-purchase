@@ -12,14 +12,12 @@ app.use(express.json())
 
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
-app.post("/checkreceipt",(req,res)=>{
-    console.log(req.data)
-    res.send('in check receipt--->',req.data)
+app.use("/api",require("./controller"))
 
-})
 
 //Routes
 app.get('/', (req, res) => {
+  res.send('Welcome To  Backend !')
 })
 
 
