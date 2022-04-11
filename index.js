@@ -17,7 +17,7 @@ app.use("/api",require("./controller"))
 
 //Routes
 app.get('/', (req, res) => {
-  res.send('Welcome To  Backend !')
+  res.send('Welcome To  Backend !v1.0.1')
 })
 
 
