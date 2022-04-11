@@ -17,6 +17,8 @@ class Validator {
 
 router.post("/checkreceipt", async (req, res) => {
   let Receipt = req.body || Receipt;
+  Receipt=Buffer.from(project.password).toString('base64');
+
 
   try {
     if (!Receipt?.originalTransactionId) {
