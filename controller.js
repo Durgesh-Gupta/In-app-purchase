@@ -13,11 +13,11 @@ router.post("/checkreceipt", async (req, res) => {
       throw new Error("Not a Valid Receipt!");
     }
     let payload = {
-      iss: "57246542-96fe-1a63e053-0824d011072a",
-      iat: 1623085200,
+      iss: process.env.issuer_id ||"57246542-96fe-1a63e053-0824d011072a",
+      iat: Math.floor(Date.now() / 1000),
       exp: Math.floor(Date.now() / 1000) + 60 * 60,
       aud: "appstoreconnect-v1",
-      bid: "com.example.testbundleid2021",
+      bid: process.env.bundle_id || "com.example.testbundleid2021",
     };
 
     let response = await getSubscription(
@@ -55,7 +55,14 @@ let Receipt = {
 };
 async function getSubscription(originalTransactionId, payload) {
   try {
-    var token = jwt.sign(payload, privateKey, { algorithm: "RS256" });
+    var token = jwt.sign(payload, privateKey, {
+      algorithm: "RS256",
+      header: {
+        alg: "RS256",
+        kid: process.env.key_id,
+        typ: "JWT",
+      },
+    });
     const response = await axios.get(
       `https://api.storekit.itunes.apple.com/inApps/v1/subscriptions/${originalTransactionId}`,
       {
