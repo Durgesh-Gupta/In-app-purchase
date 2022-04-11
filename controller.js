@@ -4,6 +4,10 @@ const axios = require("axios");
 var jwt = require("jsonwebtoken");
 const fs = require("fs");
 let privateKey = fs.readFileSync(__dirname + "/jwtRS256.key");
+// https://purchase-validator.herokuapp.com/
+require('dotenv').config()
+
+
 
 router.post("/checkreceipt", async (req, res) => {
   let Receipt = req.body || Receipt;
