@@ -5,9 +5,15 @@ var jwt = require("jsonwebtoken");
 const fs = require("fs");
 let privateKey = fs.readFileSync(__dirname + "/jwtRS256.key");
 // https://purchase-validator.herokuapp.com/
-require('dotenv').config()
+require("dotenv").config();
 
-
+class Validator {
+  constructor(key_id, bundle_id, issuer_id) {
+    this.key_id = key_id;
+    this.bundle_id = bundle_id;
+    this.issuer_id = issuer_id;
+  }
+}
 
 router.post("/checkreceipt", async (req, res) => {
   let Receipt = req.body || Receipt;
@@ -17,7 +23,7 @@ router.post("/checkreceipt", async (req, res) => {
       throw new Error("Not a Valid Receipt!");
     }
     let payload = {
-      iss: process.env.issuer_id ||"57246542-96fe-1a63e053-0824d011072a",
+      iss: process.env.issuer_id || "57246542-96fe-1a63e053-0824d011072a",
       iat: Math.floor(Date.now() / 1000),
       exp: Math.floor(Date.now() / 1000) + 60 * 60,
       aud: "appstoreconnect-v1",
