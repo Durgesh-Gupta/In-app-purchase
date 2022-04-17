@@ -17,7 +17,6 @@ class Validator {
 
 router.post("/checkreceipt", async (req, res) => {
   let Receipt = req.body || Receipt;
-  Receipt=Buffer.from(project.password).toString('base64');
 
 
   try {
@@ -110,7 +109,7 @@ router.post("/checkreceipt", async (req, res) => {
     res.json({ sucess: true, message: message, data: response });
   } catch (e) {
     console.log(e.message);
-    res.json({ sucess: "Failed", message: e.message });
+    res.json({ status: "Failed", message: e });
   }
 });
 
