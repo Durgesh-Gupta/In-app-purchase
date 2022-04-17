@@ -4,9 +4,21 @@ const axios = require("axios");
 var jwt = require("jsonwebtoken");
 const fs = require("fs");
 let privateKey = fs.readFileSync(__dirname + "/jwtRS256.key");
+// https://purchase-validator.herokuapp.com/
+require("dotenv").config();
+
+class Validator {
+  constructor(key_id, bundle_id, issuer_id) {
+    this.key_id = key_id;
+    this.bundle_id = bundle_id;
+    this.issuer_id = issuer_id;
+  }
+}
 
 router.post("/checkreceipt", async (req, res) => {
   let Receipt = req.body || Receipt;
+  Receipt=Buffer.from(project.password).toString('base64');
+
 
   try {
     // if (!Receipt?.originalTransactionId) {
@@ -122,7 +134,14 @@ let Receipt = {
 };
 async function getSubscription(originalTransactionId, payload) {
   try {
-    var token = jwt.sign(payload, privateKey, { algorithm: "RS256" });
+    var token = jwt.sign(payload, privateKey, {
+      algorithm: "RS256",
+      header: {
+        alg: "RS256",
+        kid: process.env.key_id,
+        typ: "JWT",
+      },
+    });
     const response = await axios.get(
       `https://api.storekit.itunes.apple.com/inApps/v1/subscriptions/${originalTransactionId}`,
       {
